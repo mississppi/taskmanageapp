@@ -4,8 +4,9 @@ import { FaPlus, FaTrash, FaEdit } from 'react-icons/fa'; // アイコンのイ�
 import Header from './Header';
 
 import { Task } from '../types/task'
+import TaskList from './TaskList';
 
-const Dashboard = () => {
+const MainPanel = () => {
     useEffect(() => {
         console.log("hoge")
         const fetchTodos = async () => {
@@ -63,28 +64,10 @@ const Dashboard = () => {
                         <FaPlus />
                     </button>
                 </div>
-                <ul>
-                    {tasks.map(task => (
-                        <li key={task.id} className='border-b py-2 flex justify-between items-center'>
-                            <div>
-                                <h3 className='font-semibold'>{task.title}</h3>
-                                <p>{task.description}</p>
-                                <span className='text-sm text-gray-600'>{task.percentage}% 完了</span>
-                            </div>
-                            <div className='flex space-x-2'>
-                                <button className='text-blue-500' >
-                                    <FaEdit />
-                                </button>
-                                <button className="text-red-500" >
-                                    <FaTrash />
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <TaskList tasks={tasks} onEdit={handleEditTask} onDelete={handleDeleteTask}/>
             </main>
         </div>
     )
 }
 
-export default Dashboard;
+export default MainPanel;

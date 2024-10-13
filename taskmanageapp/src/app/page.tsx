@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import "./globals.css";
-import Dashboard from '@/components/Dashboard';
+import Dashboard from '@/components/MainPanel';
 
 export default function Home() {
   return (
-    <Dashboard />
+    <div>taskmanage</div>
   );
 }
