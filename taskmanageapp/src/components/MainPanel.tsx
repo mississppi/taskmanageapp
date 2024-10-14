@@ -5,6 +5,8 @@ import Header from './Header';
 
 import { Task } from '../types/task'
 import TaskList from './TaskList';
+import TaskLabel from './TaskLabel';
+import TaskModal from './TaskModal';
 
 const MainPanel = () => {
     useEffect(() => {
@@ -35,10 +37,31 @@ const MainPanel = () => {
     const [newTask, setNewTask] = useState<Task>({ id: 0, title: '', description: '', percentage: 0});
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editingTask, setEditingTask] = useState<Task | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const handleAddTask = () => {
-        setTasks([...tasks, { ...newTask, id: tasks.length + 1}]);
-        setNewTask({ id: 0, title: '', description: '', percentage: 0})
+        setIsModalOpen(true); // モーダルを開く
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // モーダルを閉じる
+    };
+
+    const handleSubmitTask = (task: Task) => {
+        setTasks(prevTasks => {
+            // task.id が存在するか確認
+            const existingTaskIndex = prevTasks.findIndex(t => t.id === task.id);
+    
+            if (existingTaskIndex !== -1) {
+                // 更新処理: 既存のタスクを更新
+                const updatedTasks = [...prevTasks];
+                updatedTasks[existingTaskIndex] = task; // 該当のタスクを更新
+                return updatedTasks;
+            } else {
+                // 挿入処理: 新しいタスクを追加
+                return [...prevTasks, { ...task, id: prevTasks.length + 1 }];
+            }
+        });
     };
 
     const handleDeleteTask = (taskId: number) => {
@@ -46,26 +69,25 @@ const MainPanel = () => {
     }
 
     const handleEditTask = (task: Task) => {
-        setIsEditing(true);
         setEditingTask(task);
-        setNewTask(task);
+        setIsModalOpen(true);
     };
 
     return (
         <div className='flex flex-col min-h-screen'>
             <Header />
             <main className='flex-grow py-6 px-6'>
-                <div className='flex justify-between items-center mb-4'>
-                    <h2 className='text-2xl font-bold mb-4'>タスク一覧</h2>
-                    <button 
-                        className='bg-green-500 text-white p-2 rounded-full'
-                        onClick={handleAddTask}
-                    >
-                        <FaPlus />
-                    </button>
-                </div>
+                <TaskLabel onAdd={handleAddTask}/>
                 <TaskList tasks={tasks} onEdit={handleEditTask} onDelete={handleDeleteTask}/>
             </main>
+
+            {/* 新規作成モーダル */}
+            <TaskModal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                handleSubmitTask={handleSubmitTask} 
+                editingTask={editingTask}
+            />
         </div>
     )
 }

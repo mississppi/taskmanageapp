@@ -19,10 +19,16 @@ const TaskList: React.FC<{
                         <span className='text-sm text-gray-600'>{task.percentage}% 完了</span>
                     </div>
                     <div className='flex space-x-2'>
-                        <button className='text-blue-500' >
+                        <button 
+                            className='text-blue-500' 
+                            onClick={() => onEdit(task)}
+                        >
                             <FaEdit />
                         </button>
-                        <button className="text-red-500" >
+                        <button 
+                            className="text-red-500" 
+                            onClick={() => onDelete(task.id)}
+                        >
                             <FaTrash />
                         </button>
                     </div>
