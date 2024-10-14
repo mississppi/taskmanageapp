@@ -14,6 +14,9 @@ export const authOptions = {
         // セッションにカスタムデータを追加したい場合はここで処理
         return session;
         },
+        async redirect({url, baseUrl}) {
+            return `${baseUrl}/dashboard`;
+        }
     },
 };
 
