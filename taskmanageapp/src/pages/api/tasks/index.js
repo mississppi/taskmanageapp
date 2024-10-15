@@ -1,7 +1,6 @@
 import pool from '../../../lib/db';
 
 export default async function handler(req, res) {
-    console.log("api start");
     if (req.method === 'GET') {
         console.log("get");
         try {
