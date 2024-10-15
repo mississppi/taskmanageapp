@@ -31,6 +31,7 @@ const MainPanel = () => {
     const initialTasks = [
         {id: 1, title: 'プロジェクトA', description: "hogehoge", percentage: 75 },
         {id: 2, title: 'プロジェクトB', description: "hogehoge", percentage: 50 },
+        {id: 3, title: 'プロジェクトC', description: "hogehoge", percentage: 50 },
     ]
 
     const [tasks, setTasks] = useState<Task[]>(initialTasks);
